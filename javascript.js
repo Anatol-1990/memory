@@ -1,5 +1,5 @@
 
-var audio = new Audio('sheb-wooley-do-i-remember.mp3');
+const audio = new Audio('sheb-wooley-do-i-remember.mp3');
 audio.loop = true;
 
 document.addEventListener("DOMContentLoaded", waitForStart);
@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 function waitForStart(){
-         
     let timerId = setInterval(fillTheFieldWithIcons, 500);
-    document.querySelector(".field").addEventListener('click', function start(){
+
+    document.querySelector(".field").addEventListener('click', function start() {
         
         if (timerId) {
             clearInterval(timerId);
@@ -31,7 +31,6 @@ function waitForStart(){
     });
     
 }
-
 
 function fillTheFieldWithIcons() {
     let elements = document.querySelectorAll(".icon");
@@ -47,24 +46,17 @@ function fillTheFieldWithIcons() {
             random.push(symbol);
         }    
     }
-    
 
     elements.forEach(function(el, index){
-
         el.style.opacity = 100;
         el.innerText = random[index];
-        
     });
 
     random = [];
-
 }
 
-
 function play() {
-
     fillTheFieldWithIcons();
-
 
     let elements = document.querySelectorAll(".icon");
 
@@ -75,14 +67,11 @@ function play() {
         el.style.opacity = 0;        
     });
 
-
-    
     let previousEl = "";
     let counter = 0;
 
     document.addEventListener('click', function gamePlay(e){
         
-
         if (e.target.tagName == 'SPAN' && !e.target.classList.contains('open')) {
             e.target.style.opacity = 100;
             

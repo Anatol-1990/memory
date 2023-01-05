@@ -28,6 +28,10 @@
     justify-content: center;
 }
 
+.button-container {
+    max-width: 400px;
+    justify-content: center;
+}
 
 .grid-item {
     background-color: peachpuff;
@@ -51,10 +55,7 @@
         padding: 2vw;
         font-size: 12vw;
     }
-
 }
-
-
 
 
 .music {
