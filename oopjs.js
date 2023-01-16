@@ -1,85 +1,97 @@
 document.addEventListener("DOMContentLoaded", startGame);
 
-function startGame() {
+/*
+Для режима Random, нужно сделать такие правила: та же самая игра, но иконок необязательно может быть две.
+Их может быть любое другое число, но точно больше 1 и точно меньше, чем N - 2.
+Кажется, может быть весело :)
+
+Добавить режим с цифрами вместо картинок
+
+*/
+
+document.querySelector('#easy').addEventListener('click', startGame)
+document.querySelector('#medium').addEventListener('click', startGame)
+document.querySelector('#hard').addEventListener('click', startGame)
+
+const field = document.querySelector('.field');
+
+let previousElement, currentElement;
+
+function startGame(e) {
+
     const f = new Field();
-    const size = 6;
+    let size = 6;
+
+    switch (e.target) {
+        case document.querySelector('#hard'):
+            size = 8;
+            break;
+        case document.querySelector('#easy'):
+            size = 4;
+            break
+        case document.querySelector('#medium'):
+            size = 6;
+            break;
+    }
+
 
     f.create(size);
     f.clear();
 
-    let previousEl = "";
-    let counter = 0;
-
-    document.addEventListener('click', function gamePlay(e){
-
-        if (e.target.tagName == 'SPAN' && !e.target.classList.contains('open')) {
-            e.target.style.opacity = 100;
-
-            if (previousEl == "") {
-                previousEl = e.target;
-            } else {
-                if (previousEl.innerText == e.target.innerText && previousEl != e.target) {
-                    e.target.style.opacity = 100;
-                    e.target.classList.add('open');
-                    previousEl.classList.add('open');
-                    counter += 2;
-                    previousEl = '';
-
-                    if (counter == size ** 2) {
-                        document.removeEventListener('click', gamePlay);
-
-                        //waitForStart();
-                        return;
-                    }
-
-                } else {
-                    document.removeEventListener('click', gamePlay);
-
-                    setTimeout(function(){
-                        previousEl.style.opacity = 0;
-                        e.target.style.opacity = 0;
-                        previousEl = '';
-                        document.addEventListener('click', gamePlay);
-                    }, 500);
-
-                }
-            }
-
-        }
-    });
-
 }
 
-const field = document.querySelector('.field');
+function flipCard() {
+    // https://www.youtube.com/watch?v=DABkhfsBAWw
+    const currentElement = this.querySelector(".icon");
+
+    if (previousElement !== currentElement) {
+        currentElement.classList.add('show');
+
+        if (!previousElement) {
+            previousElement = currentElement;
+        } else {
+            checkMatch(previousElement, currentElement);
+            previousElement = '';
+        }
+
+    }
+}
+
+function checkMatch(prev, curr) {
+    if (prev.innerText === curr.innerText) {
+        return true;
+
+    } else {
+        console.log('did not match')
+        setTimeout(() => {
+            prev.classList.remove('show');
+            curr.classList.remove('show')
+            return false;
+        }, 1000)
+
+    }
+}
 
 class GridItem {
     constructor() {
         this.htmlElement = document.createElement("div");
         this.htmlElement.classList.add('grid-item');
+        this.appendIconContainer();
 
+        this.htmlElement.addEventListener('click', flipCard)
+    }
+
+
+    appendIconContainer() {
         const icon = document.createElement("span");
         icon.classList.add("icon");
 
         this.htmlElement.appendChild(icon);
-
-        const self = this;
-
-        icon.addEventListener('click', function () {
-            self.hide()
-        })
-
+        this.icon = icon;
     }
 
     addToField() {
-        field.appendChild(this.htmlElement)
-    }
-
-    hide() {
-        this.htmlElement.querySelector('.icon').style.opacity = 0;
-    }
-
-    show() {
-        this.htmlElement.querySelector('.icon').style.opacity = 100;
+        field.appendChild(this.htmlElement);
     }
 
 }
@@ -89,19 +101,12 @@ class Field {
         this.htmlElement = document.querySelector(".field");
     }
 
-    create(size) {
-        switch (size) {
-            case 4:
-                field.style.grid = 'repeat(4, 100px) / repeat(4, 100px)';
-                break;
-            case 6:
-                field.style.grid = 'repeat(6, 90px) / repeat(6, 90px)';
-                break;
-            case 8:
-                field.style.grid = 'repeat(8, 80px) / repeat(8, 80px)';
-        }
+    create(size = 6) {
+        this.htmlElement.innerHTML = "";
 
-        for (let i=0; i< size**2; i++) {
+        field.style.grid = `repeat(${size}, ${400/size}px) / repeat(${size}, ${400/size}px)`;
+
+        for (let i=0; i < size**2; i++) {
             const item = new GridItem();
             item.addToField();
         }
@@ -137,7 +142,7 @@ class Field {
         }
 
         elements.forEach(function(el, index){
-            el.style.opacity = 100;
+            el.style.opacity = 0;
             el.innerText = random[index];
         });
 
@@ -163,11 +168,5 @@ class Field {
 
 
 
-
-/*
-Для режима Random, нужно сделать такие правила: та же самая игра, но иконок необязательно может быть две.
-Их может быть любое другое число, но точно больше 1 и точно меньше, чем N - 2.
-Кажется, может быть весело :)
- */
 
 
