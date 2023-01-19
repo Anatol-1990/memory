@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", startGame);
+document.querySelectorAll('.level').forEach(button => button.addEventListener('click', startGame))
 
 /*
 Для режима Random, нужно сделать такие правила: та же самая игра, но иконок необязательно может быть две.
@@ -9,16 +10,11 @@ document.addEventListener("DOMContentLoaded", startGame);
 
 */
 
-document.querySelector('#easy').addEventListener('click', startGame)
-document.querySelector('#medium').addEventListener('click', startGame)
-document.querySelector('#hard').addEventListener('click', startGame)
-
 const field = document.querySelector('.field');
-
 let previousElement, currentElement;
+let disableDeck = false;
 
 function startGame(e) {
-
     const f = new Field();
     let size = 6;
 
@@ -29,11 +25,10 @@ function startGame(e) {
         case document.querySelector('#easy'):
             size = 4;
             break
-        case document.querySelector('#medium'):
+        default:
             size = 6;
             break;
     }
-
 
     f.create(size);
     f.clear();
@@ -41,35 +36,39 @@ function startGame(e) {
 }
 
 function flipCard() {
-    // https://www.youtube.com/watch?v=DABkhfsBAWw
-    const currentElement = this.querySelector(".icon");
+    currentElement = this.querySelector(".icon");
 
-    if (previousElement !== currentElement) {
+    if (previousElement !== currentElement && !disableDeck) {
         currentElement.classList.add('show');
 
         if (!previousElement) {
             previousElement = currentElement;
-        } else {
-            checkMatch(previousElement, currentElement);
-            previousElement = '';
+            return;
         }
 
+        disableDeck = true;
+        checkMatch(previousElement, currentElement);
+
+    } else {
+        currentElement.classList.remove('show');
+        previousElement = '';
     }
 }
 
 function checkMatch(prev, curr) {
     if (prev.innerText === curr.innerText) {
-        return true;
-
+        prev.parentElement.removeEventListener('click', flipCard);
+        curr.parentElement.removeEventListener('click', flipCard);
+        disableDeck = false;
     } else {
-        console.log('did not match')
         setTimeout(() => {
             prev.classList.remove('show');
-            curr.classList.remove('show')
-            return false;
-        }, 1000)
-
+            curr.classList.remove('show');
+            disableDeck = false;
+        }, 500)
     }
+
+    previousElement = '';
 }
 
 class GridItem {
@@ -87,7 +86,6 @@ class GridItem {
         icon.classList.add("icon");
 
         this.htmlElement.appendChild(icon);
-        this.icon = icon;
     }
 
     addToField() {
@@ -150,7 +148,7 @@ class Field {
 
     }
 
-    clear() {
+    clear() { // Надо понять, что это и нужно ли это
         this.getIcons().forEach(function(el, index){
             if (el.classList.contains('open')) {
                 el.classList.remove('open');
