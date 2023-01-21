@@ -41,13 +41,13 @@
     /*padding: 7px 0;*/
     font-size: 40px;
     text-align: center;
+    color: saddlebrown;
 
 }
 
 .show {
     opacity: 100!important;
 }
-
 
 
 @media only screen and (max-width: 400px) {

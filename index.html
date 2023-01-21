@@ -26,25 +26,60 @@
                 </div>
 
                 <div class="row d-flex justify-content-center">
-                    <div class="col">
-                        <input type="radio" class="btn-check level" name="options" id="easy" autocomplete="off" >
-                        <label class="btn btn-outline-secondary btn-sm" for="easy" >4</label>
-
-                        <input type="radio" class="btn-check level" name="options" id="medium" autocomplete="off" checked>
-                        <label class="btn btn-outline-secondary btn-sm" for="medium">6</label>
-
-                        <input type="radio" class="btn-check level" name="options" id="hard" autocomplete="off" >
-                        <label class="btn btn-outline-secondary btn-sm" for="hard">8</label>
-
-                        <button type="button" class="btn btn-outline-secondary btn-sm">reset</button>
-
-                    </div>
-                    <div class="col">
-                        <div class="grid-container field"></div>
-                    </div>
-                    <div class="col"></div>
-
+                    <div class="grid-container field"></div>
                 </div>
+                <div class="row">
+                    <h3 class="mt-4 mb-4 d-flex justify-content-center" id="moves">Moves: 0</h3>
+                </div>
+                <fieldset class="row mb-3">
+                    <legend class="col-form-label col-sm-2 pt-0">Settings</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input level" type="radio" name="gridRadios" id="easy" value="option1">
+                            <label class="form-check-label" for="easy">
+                                Easy
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input level" type="radio" name="gridRadios" id="medium" value="option2" checked>
+                            <label class="form-check-label" for="medium">
+                                Medium
+                            </label>
+                        </div>
+                        <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
+                            <label class="form-check-label" for="gridRadios3">
+                                Hard
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="row mb-3">
+                    <div class="col-sm-10 offset-sm-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck1">
+                            <label class="form-check-label" for="gridCheck1">
+                                Fun mode
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!--                <div class="row">-->
+<!--                    <div class="d-flex flex-row mt-3 mb-4 justify-content-center">-->
+<!--                        <input type="radio" class="btn-check level" name="options" id="easy" autocomplete="off" >-->
+<!--                        <label class="btn btn-outline-secondary m-3" for="easy" >4</label>-->
+
+<!--                        <input type="radio" class="btn-check level" name="options" id="medium" autocomplete="off" checked>-->
+<!--                        <label class="btn btn-outline-secondary m-3" for="medium">6</label>-->
+
+<!--&lt;!&ndash;                        <input type="radio" class="btn-check level" name="options" id="hard" autocomplete="off" >&ndash;&gt;-->
+<!--&lt;!&ndash;                        <label class="btn btn-outline-secondary m-3" for="hard">8</label>&ndash;&gt;-->
+
+<!--                        <button type="button" class="btn btn-outline-secondary m-3"><i class="bi bi-bootstrap-reboot"></i></button>-->
+<!--                    </div>-->
+
+<!--                </div>-->
 
             </div>
 
