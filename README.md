@@ -1,1 +1,1 @@
-https://anatol-1990.github.io/memory3/
+https://ausievich.github.io/memory3/
